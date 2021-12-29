@@ -261,6 +261,40 @@ while true ; do
   sleep 1800
 done
 
+# Analysis Setup for Mutect2: Tumor Only
+BAMLIST=($(ls . | grep 'bqsr.bam$'))
+# run Mutect2
+declare -a VCFLIST
+for i in "${BAMLIST[@]}" ; do
+  OUTNAME=$(echo "$i" | cut -d, -f1 | cut -d. -f1)
+  TUMORBAM=$(echo "$i")
+  OUTPUTNAME=$(echo "mutect2.unfiltered.tumorOnly.${OUTNAME}.vcf")
+  VCFLIST+=("${OUTPUTNAME}")
+  echo "gatk --java-options \"-Xmx16g\" Mutect2 --independent-mates true -R ${REFFILE} -I ${TUMORBAM} -O ${OUTPUTNAME} &> ${i}.mutect2.${TSTRING}.log &" &>> stepMutect2_${TSTRING}
+  echo "sleep 2" >> stepMutect2_${TSTRING}
+done
+echo "$PSTRING" >> stepMutect2_${TSTRING}
+echo "echo 'Finished Mutect2 Step of workflow, starting Filtering'" >> stepMutect2_${TSTRING}
+
+# run Mutect2 Filtering
+for i in "${VCFLIST[@]}" ; do
+  OUTNAMEVCF=$(echo "$i" | cut -d. -f3-)
+  OUTNAMEVCF=$(echo "mutect2.${OUTNAMEVCF}")
+  if [[ $RUNMODE != 'PAIRED' ]] ; then
+    echo "gatk --java-options \"-Xmx16g\" FilterMutectCalls -V ${i} -O ${OUTNAMEVCF} &> ${i}.filtermutect2.${TSTRING}.log &" &>> stepMutect2_${TSTRING}
+    echo "sleep 2" >> stepMutect2_${TSTRING}
+  else
+    echo "gatk --java-options \"-Xmx16g\" FilterMutectCalls -V ${i} -O ${OUTNAMEVCF} &> ${i}.filtermutect2.${TSTRING}.log &" &>> stepMutect2_${TSTRING}
+    echo "sleep 2" >> stepMutect2_${TSTRING}
+  fi
+done
+echo "$PSTRING" >> stepMutect2_${TSTRING}
+echo "touch mutect2_${TSTRING}_finished" >> stepMutect2_${TSTRING}
+echo "echo 'Workflow Completed'" >> stepMutect2_${TSTRING}
+echo "completed setup and created file stepMutect2_${TSTRING}
+sleep 30
+
+
 bash mutect2_${TSTRING}
 while true ; do
   if [ -f mutect2_${TSTRING}_finished ] ; then
