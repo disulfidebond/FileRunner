@@ -45,3 +45,5 @@ for i in "${ARR[@]}" ; do
     fi
   done
 done
+
+return 0
