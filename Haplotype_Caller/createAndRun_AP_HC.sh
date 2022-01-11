@@ -85,6 +85,9 @@ while true ; do
   if [ -f bwa_align_${TSTRING}_finished ] ; then
     echo 'finished BWA alignment step'
     mv *.fq.gz ../HC_run${TSTRING}/
+    mv *.fastq.gz ../HC_run${TSTRING}/
+    mv *.fastq ../HC_run${TSTRING}/
+    mv *.fq ../HC_run${TSTRING}/
     break
   fi
   echo 'pausing for alignment to complete...'
@@ -103,7 +106,7 @@ done
 for i in "${BAMLIST[@]}" ; do
   BAMRGX=$(echo "$i")
   OUTBAMNAME=$(echo "${BAMRGX}.merged.sorted.bam")
-  BAMFILES=($(ls . | grep "^${BAMRGX}" | grep -v merged))
+  BAMFILES=($(ls . | grep "^${BAMRGX}" | grep -v merged | grep 'sorted.bam$'))
   BAMSTRING=''
   for x in "${BAMFILES[@]}" ; do
     S=$(echo "I=${x} ")
@@ -121,7 +124,6 @@ bash merge_command_${TSTRING}
 while true ; do
   if [ -f merge_command_${TSTRING}_finished ] ; then
     echo 'finished merge alignment step'
-    mv *.sorted.bam ../HC_run${TSTRING}/
     break
   fi
   echo 'pausing for alignment to complete...'
@@ -252,6 +254,7 @@ bash step3_${TSTRING}
 while true ; do
   if [ -f step3_${TSTRING}_finished ] ; then
     echo 'finished Preprocess Step 3: BQSR'
+    mv *.sorted.bam ../HC_run${TSTRING}/
     break
   fi
   echo 'pausing for BQSR Step to complete...'
@@ -276,8 +279,10 @@ bash stepHC_${TSTRING}
 while true ; do
   if [ -f stepHC_${TSTRING}_finished ] ; then
     echo 'finished HC Step'
-    mv *.bqsr.bam ../HC_run${TSTRING}/
-    mv *.vcf ../HC_run${TSTRING}/
+    mkdir ../HC_run${TSTRING}/BAM_VCF
+    mv *.bqsr.bam ../HC_run${TSTRING}/BAM_VCF/
+    mv *.vcf ../HC_run${TSTRING}/BAM_VCF/
+    mv *.vcf.idx ../HC_run${TSTRING}/BAM_VCF/
     break
   fi
   echo 'pausing for HC step to complete...'
