@@ -87,7 +87,10 @@ bash bwa_align_${TSTRING}
 while true ; do
   if [ -f bwa_align_${TSTRING}_finished ] ; then
     echo 'finished BWA alignment step'
-    mv *.fq.gz ../Mu2TO_run${TSTRING}//
+    mv *.fq.gz ../Mu2TO_run${TSTRING}/
+    mv *.fastq.gz ../Mu2TO_run${TSTRING}/
+    mv *.fastq ../Mu2TO_run${TSTRING}/
+    mv *.fq ../Mu2TO_run${TSTRING}/
     break
   fi
   echo 'pausing for alignment to complete...'
@@ -106,7 +109,7 @@ done
 for i in "${BAMLIST[@]}" ; do
   BAMRGX=$(echo "$i")
   OUTBAMNAME=$(echo "${BAMRGX}.merged.sorted.bam")
-  BAMFILES=($(ls . | grep "^${BAMRGX}" | grep -v merged))
+  BAMFILES=($(ls . | grep "^${BAMRGX}" | grep -v merged | grep 'sorted.bam$'))
   BAMSTRING=''
   for x in "${BAMFILES[@]}" ; do
     S=$(echo "I=${x} ")
@@ -124,7 +127,6 @@ bash merge_command_${TSTRING}
 while true ; do
   if [ -f merge_command_${TSTRING}_finished ] ; then
     echo 'finished merge alignment step'
-    mv *.sorted.bam ../Mu2TO_run${TSTRING}/
     break
   fi
   echo 'pausing for alignment to complete...'
@@ -255,6 +257,7 @@ bash step3_${TSTRING}
 while true ; do
   if [ -f step3_${TSTRING}_finished ] ; then
     echo 'finished Preprocess Step 3: BQSR'
+    mv *.sorted.bam ../Mu2TO_run${TSTRING}/
     break
   fi
   echo 'pausing for BQSR Step to complete...'
@@ -299,10 +302,11 @@ bash mutect2_${TSTRING}
 while true ; do
   if [ -f mutect2_${TSTRING}_finished ] ; then
     echo 'finished Mutect2 Analysis'
-    mv *.bqsr.bam ../Mu2TO_run${TSTRING}/
-    mv *.vcf ../Mu2TO_run${TSTRING}/
-    mv *.idx ../Mu2TO_run${TSTRING}/
-    mv *.stats ../Mu2TO_run${TSTRING}/
+    mkdir ../Mu2TO_run${TSTRING}/BAM_VCF
+    mv *.bqsr.bam ../Mu2TO_run${TSTRING}/BAM_VCF/
+    mv *.vcf ../Mu2TO_run${TSTRING}/BAM_VCF/
+    mv *.idx ../Mu2TO_run${TSTRING}/BAM_VCF/
+    mv *.stats ../Mu2TO_run${TSTRING}/BAM_VCF/
     break
   fi
   echo 'pausing for Mutect2 analyses to complete...'
