@@ -85,6 +85,9 @@ while true ; do
   if [ -f bwa_align_${TSTRING}_finished ] ; then
     echo 'finished BWA alignment step'
     mv *.fq.gz ../processOnly_run${TSTRING}/
+    mv *.fastq.gz ../processOnly_run${TSTRING}/
+    mv *.fastq ../processOnly_run${TSTRING}/
+    mv *.fq ../processOnly_run${TSTRING}/
     break
   fi
   echo 'pausing for alignment to complete...'
@@ -103,7 +106,7 @@ done
 for i in "${BAMLIST[@]}" ; do
   BAMRGX=$(echo "$i")
   OUTBAMNAME=$(echo "${BAMRGX}.merged.sorted.bam")
-  BAMFILES=($(ls . | grep "^${BAMRGX}" | grep -v merged))
+  BAMFILES=($(ls . | grep "^${BAMRGX}" | grep -v merged | grep 'sorted.bam$'))
   BAMSTRING=''
   for x in "${BAMFILES[@]}" ; do
     S=$(echo "I=${x} ")
@@ -122,7 +125,6 @@ bash merge_command_${TSTRING}
 while true ; do
   if [ -f merge_command_${TSTRING}_finished ] ; then
     echo 'finished merge alignment step'
-    mv *.sorted.bam ../processOnly_run${TSTRING}/
     break
   fi
   echo 'pausing for alignment to complete...'
@@ -253,6 +255,7 @@ bash step3_${TSTRING}
 while true ; do
   if [ -f step3_${TSTRING}_finished ] ; then
     echo 'finished Preprocess Step 3: BQSR'
+    mv *.sorted.bam ../processOnly_run${TSTRING}/
     mv *.bqsr.bam ../processOnly_run${TSTRING}/
     break
   fi
