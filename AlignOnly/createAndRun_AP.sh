@@ -255,8 +255,9 @@ bash step3_${TSTRING}
 while true ; do
   if [ -f step3_${TSTRING}_finished ] ; then
     echo 'finished Preprocess Step 3: BQSR'
-    mv *.sorted.bam ../processOnly_run${TSTRING}/
-    mv *.bqsr.bam ../processOnly_run${TSTRING}/
+    mkdir ../processOnly_run${TSTRING}/BAM_VCF
+    mv *.sorted.bam ../processOnly_run${TSTRING}/BAM_VCF/
+    mv *.bqsr.bam ../processOnly_run${TSTRING}/BAM_VCF/
     break
   fi
   echo 'pausing for BQSR Step to complete...'
