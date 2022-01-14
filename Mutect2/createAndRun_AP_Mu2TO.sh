@@ -313,4 +313,19 @@ while true ; do
   sleep 1800
 done
 
+mkdir ../Mu2TO_run${TSTRING}/runfiles_and_logs
+mv mkDupLog.* ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv step1* ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv step2* ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv step3* ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv *.log ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv *.rg.txt ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv *.sorted.fixed.mkDup.metrics.txt ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv *.sorted.fixed.mkDup.bqsr.table ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+
+rm *.sorted.fixed.bam*
+rm *.sorted.fixed.mkDup.bam*
+rm *.sorted.fixed.mkDup.bqsr.bai
+echo 'cleanup completed'
+
 touch mu2to_run_completed
