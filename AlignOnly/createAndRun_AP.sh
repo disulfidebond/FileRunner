@@ -273,6 +273,8 @@ mv *.log ../processOnly_run${TSTRING}/runfiles_and_logs/
 mv *.rg.txt ../processOnly_run${TSTRING}/runfiles_and_logs/
 mv *.sorted.fixed.mkDup.metrics.txt ../processOnly_run${TSTRING}/runfiles_and_logs/
 mv *.sorted.fixed.mkDup.bqsr.table ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv mergeLog* ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv merge_command* ../processOnly_run${TSTRING}/runfiles_and_logs/
 
 rm *.sorted.fixed.bam*
 rm *.sorted.fixed.mkDup.bam*
