@@ -322,6 +322,8 @@ mv *.log ../Mu2TO_run${TSTRING}/runfiles_and_logs/
 mv *.rg.txt ../Mu2TO_run${TSTRING}/runfiles_and_logs/
 mv *.sorted.fixed.mkDup.metrics.txt ../Mu2TO_run${TSTRING}/runfiles_and_logs/
 mv *.sorted.fixed.mkDup.bqsr.table ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv mergeLog* ../Mu2TO_run${TSTRING}/runfiles_and_logs/
+mv merge_command* ../Mu2TO_run${TSTRING}/runfiles_and_logs/
 
 rm *.sorted.fixed.bam*
 rm *.sorted.fixed.mkDup.bam*
