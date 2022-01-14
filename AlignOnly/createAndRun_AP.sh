@@ -264,15 +264,15 @@ while true ; do
   sleep 1800
 done
 
-mkdir ../HC_run${TSTRING}/runfiles_and_logs
-mv mkDupLog.* ../HC_run${TSTRING}/runfiles_and_logs/
-mv step1* ../HC_run${TSTRING}/runfiles_and_logs/
-mv step2* ../HC_run${TSTRING}/runfiles_and_logs/
-mv step3* ../HC_run${TSTRING}/runfiles_and_logs/
-mv *.log ../HC_run${TSTRING}/runfiles_and_logs/
-mv *.rg.txt ../HC_run${TSTRING}/runfiles_and_logs/
-mv *.sorted.fixed.mkDup.metrics.txt ../HC_run${TSTRING}/runfiles_and_logs/
-mv *.sorted.fixed.mkDup.bqsr.table ../HC_run${TSTRING}/runfiles_and_logs/
+mkdir ../processOnly_run${TSTRING}/runfiles_and_logs
+mv mkDupLog.* ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv step1* ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv step2* ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv step3* ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv *.log ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv *.rg.txt ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv *.sorted.fixed.mkDup.metrics.txt ../processOnly_run${TSTRING}/runfiles_and_logs/
+mv *.sorted.fixed.mkDup.bqsr.table ../processOnly_run${TSTRING}/runfiles_and_logs/
 
 rm *.sorted.fixed.bam*
 rm *.sorted.fixed.mkDup.bam*
