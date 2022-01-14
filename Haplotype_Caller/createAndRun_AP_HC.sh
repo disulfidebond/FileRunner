@@ -289,4 +289,19 @@ while true ; do
   sleep 1800
 done
 
+mkdir ../HC_run${TSTRING}/runfiles_and_logs
+mv mkDupLog.* ../HC_run${TSTRING}/runfiles_and_logs/
+mv step1* ../HC_run${TSTRING}/runfiles_and_logs/
+mv step2* ../HC_run${TSTRING}/runfiles_and_logs/
+mv step3* ../HC_run${TSTRING}/runfiles_and_logs/
+mv *.log ../HC_run${TSTRING}/runfiles_and_logs/
+mv *.rg.txt ../HC_run${TSTRING}/runfiles_and_logs/
+mv *.sorted.fixed.mkDup.metrics.txt ../HC_run${TSTRING}/runfiles_and_logs/
+mv *.sorted.fixed.mkDup.bqsr.table ../HC_run${TSTRING}/runfiles_and_logs/
+
+rm *.sorted.fixed.bam*
+rm *.sorted.fixed.mkDup.bam*
+rm *.sorted.fixed.mkDup.bqsr.bai
+echo 'cleanup completed'
+
 touch hc_run_completed
