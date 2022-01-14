@@ -298,6 +298,8 @@ mv *.log ../HC_run${TSTRING}/runfiles_and_logs/
 mv *.rg.txt ../HC_run${TSTRING}/runfiles_and_logs/
 mv *.sorted.fixed.mkDup.metrics.txt ../HC_run${TSTRING}/runfiles_and_logs/
 mv *.sorted.fixed.mkDup.bqsr.table ../HC_run${TSTRING}/runfiles_and_logs/
+mv mergeLog* ../HC_run${TSTRING}/runfiles_and_logs/
+mv merge_command* ../HC_run${TSTRING}/runfiles_and_logs/
 
 rm *.sorted.fixed.bam*
 rm *.sorted.fixed.mkDup.bam*
