@@ -67,6 +67,32 @@ rm mu2to_run_completed 2> /dev/null
 touch run_started
 mkdir ../Mu2TO_run${TSTRING}
 
+# Setup1: create a command script for running bwa files
+touch run_started
+mkdir ../Mu2TO_run${TSTRING}/
+
+# Setup2: move other .bed, .bam, and .vcf files to
+mkdir ../Mu2TO_run${TSTRING}/orig_files
+
+ARRFILES_BAM=($(ls . | grep 'bam$'))
+ARRFILES_VCF=($(ls . | grep 'vcf$' | grep -v 'resources_broad'))
+ARRFILES_VCFGZ=($(ls . | grep 'vcf.gz$' | grep -v 'resources_broad'))
+ARRFILES_BED=($(ls . | grep 'bed$'))        
+
+
+for i in "${ARRFILES_BAM[@]}" ; do
+  mv ${i} ../Mu2TO_run${TSTRING}/orig_files/
+done
+for i in "${ARRFILES_VCF[@]}" ; do
+  mv ${i} ../Mu2TO_run${TSTRING}/orig_files/
+done
+for i in "${ARRFILES_VCFGZ[@]}"	; do
+  mv ${i} ../Mu2TO_run${TSTRING}/orig_files/
+done
+for i in "${ARRFILES_BED[@]}" ;	do 
+  mv ${i} ../Mu2TO_run${TSTRING}/orig_files/
+done
+
 for i in "${FQFILES[@]}" ; do
   FQ1=$(echo "$i" | cut -d, -f1)
   FQ2=$(echo "$i" | cut -d, -f2)
@@ -152,7 +178,6 @@ done
 RGFILE='.rg.txt'
 
 # required variables
-TSTRING=$(date +"%m%d_%H%M")
 V=$(echo ${#BAMLIST[@]})
 PSTRING='wait'
 for i in $(seq 1 $V) ; do
