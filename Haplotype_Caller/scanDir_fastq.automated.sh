@@ -2,10 +2,6 @@
 rm runFile.data.csv 2> /dev/null
 rm runFile.analysis.csv 2> /dev/null
 
-
-# add extra pause to account for files being copied to directory
-sleep 1h
-
 ARR=($(ls . | grep 'fastq.gz$' | cut -d_ -f1 | sort -n | uniq))
 ARRCHECK=$(echo ${#ARR[@]})
 SUFFIX='fastq.gz$'
@@ -24,11 +20,37 @@ if ((ARRCHECK==0)) ; then
   ARRCHECK=$(echo ${#ARR[@]})
   SUFFIX='fq$'
 fi
+# exit and return to scanner loop
 if ((ARRCHECK==0)) ; then
-  echo 'Error, no read files found with endings:'
-  echo 'fq, fq.gz. fastq, fastq.gz'
-  exit 1
+  return 0
 fi
+
+# pause for 1 hour to account for file transfer,
+# re-scan directory, then start processing
+sleep 1h
+ARR=($(ls . | grep 'fastq.gz$' | cut -d_ -f1 | sort -n | uniq))
+ARRCHECK=$(echo ${#ARR[@]})
+SUFFIX='fastq.gz$'
+if ((ARRCHECK==0)) ; then
+  ARR=($(ls . | grep 'fastq$' | cut -d_ -f1 | sort -n | uniq))
+  ARRCHECK=$(echo ${#ARR[@]})
+  SUFFIX='fastq$'
+fi
+if ((ARRCHECK==0)) ; then
+  ARR=($(ls . | grep 'fq.gz$' | cut -d_ -f1 | sort -n | uniq))
+  ARRCHECK=$(echo ${#ARR[@]})
+  SUFFIX='fq.gz$'
+fi
+if ((ARRCHECK==0)) ; then
+  ARR=($(ls . | grep 'fq$' | cut -d_ -f1 | sort -n | uniq))
+  ARRCHECK=$(echo ${#ARR[@]})
+  SUFFIX='fq$'
+fi
+# failsafe if mistakenly copied file: exit and return to scanner loop
+if ((ARRCHECK==0)) ; then
+  return 0
+fi
+
 
 for i in "${ARR[@]}" ; do 
   FARRAY=($(ls . | grep "^${i}" | grep "$SUFFIX"))
