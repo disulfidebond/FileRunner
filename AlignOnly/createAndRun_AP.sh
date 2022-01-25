@@ -64,6 +64,28 @@ fi
 touch run_started
 mkdir ../processOnly_run${TSTRING}
 
+
+# Setup2: move other .bed, .bam, and .vcf files to
+mkdir ../processOnly_run${TSTRING}/orig_files
+ARRFILES_BAM=($(ls . | grep 'bam$'))
+ARRFILES_VCF=($(ls . | grep 'vcf$' | grep -v 'resources_broad'))
+ARRFILES_VCFGZ=($(ls . | grep 'vcf.gz$' | grep -v 'resources_broad'))
+ARRFILES_BED=($(ls . | grep 'bed$'))        
+
+
+for i in "${ARRFILES_BAM[@]}" ; do
+  mv ${i} ../processOnly_run${TSTRING}/orig_files/
+done
+for i in "${ARRFILES_VCF[@]}" ; do
+  mv ${i} ../processOnly_run${TSTRING}/orig_files/
+done
+for i in "${ARRFILES_VCFGZ[@]}"	; do
+  mv ${i} ../processOnly_run${TSTRING}/orig_files/
+done
+for i in "${ARRFILES_BED[@]}" ;	do 
+  mv ${i} ../processOnly_run${TSTRING}/orig_files/
+done
+
 for i in "${FQFILES[@]}" ; do
   FQ1=$(echo "$i" | cut -d, -f1)
   FQ2=$(echo "$i" | cut -d, -f2)
