@@ -2,8 +2,7 @@
 while true ; do
   TSTRING=$(date +"%m%d_%H%M")
   source scanDir_fastq.automated.sh
-  STARTVAR=$?
-  if [ $STARTVAR -eq 0 ] ; then
+  if [ -f runFile.data.csv ] ; then
     INITIAL_TSTRING=$(echo "$TSTRING")
     echo "created runFile.data.csv at $TSTRING" > runLog.hc.${INITIAL_TSTRING}.log
     bash createAndRun_AP_HC.sh 'hg19.fa' 'runFile.data.csv'
