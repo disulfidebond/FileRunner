@@ -46,7 +46,10 @@ if ((ARRCHECK==0)) ; then
   ARRCHECK=$(echo ${#ARR[@]})
   SUFFIX='fq$'
 fi
-
+# failsafe if mistakenly copied file: exit and return to scanner loop
+if ((ARRCHECK==0)) ; then
+  return 0
+fi
 
 
 for i in "${ARR[@]}" ; do 
