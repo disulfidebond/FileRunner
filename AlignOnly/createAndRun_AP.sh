@@ -172,7 +172,6 @@ done
 RGFILE='.rg.txt'
 
 # required variables
-TSTRING=$(date +"%m%d_%H%M")
 V=$(echo ${#BAMLIST[@]})
 PSTRING='wait'
 for i in $(seq 1 $V) ; do
