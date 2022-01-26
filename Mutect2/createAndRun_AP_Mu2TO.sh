@@ -124,7 +124,7 @@ while true ; do
 done
 
 # Setup2: create a command script for merging BAM files
-BAMLIST=($(ls . | grep 'sorted.bam$' | grep -v merged | cut -d_ -f1-2 | sort -n | uniq))
+BAMLIST=($(ls . | grep 'sorted.bam$' | cut -d_ -f1-2 | sort -n | uniq))
 V=$(echo ${#BAMLIST[@]})
 PSTRING='wait'
 # this sets the bash script to wait until all alignments are completed
