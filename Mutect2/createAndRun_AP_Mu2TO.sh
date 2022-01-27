@@ -317,15 +317,15 @@ for i in "${VCFLIST[@]}" ; do
   fi
 done
 echo "$PSTRING" >> stepMutect2_${TSTRING}
-echo "touch mutect2_${TSTRING}_finished" >> stepMutect2_${TSTRING}
+echo "touch stepMutect2_${TSTRING}_finished" >> stepMutect2_${TSTRING}
 echo "echo 'Workflow Completed'" >> stepMutect2_${TSTRING}
 echo "completed setup and created file stepMutect2_${TSTRING}
 sleep 30
 
 
-bash mutect2_${TSTRING}
+bash stepMutect2_${TSTRING}
 while true ; do
-  if [ -f mutect2_${TSTRING}_finished ] ; then
+  if [ -f stepMutect2_${TSTRING}_finished ] ; then
     echo 'finished Mutect2 Analysis'
     mkdir ../Mu2TO_run${TSTRING}/BAM_VCF
     mv *.bqsr.bam ../Mu2TO_run${TSTRING}/BAM_VCF/
